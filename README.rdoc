@@ -1,28 +1,14 @@
-== README
+== Filtr
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This application will serve and store image filters
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Should have:
+*Stackable filters
+*Filter sharing
+*User specific filters
+*Guest filters for quick first time user creations
+*User logins
+*Eventually use somthing like imagur to store images
+*Maybe have canvas to allow user to draw own image
+*Filters entered in boxes or filter functions (write in javascript, send text to server and write to javascript file, reload javascript and create filter)
+*Filter time feedback
