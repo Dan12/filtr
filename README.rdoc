@@ -2,7 +2,7 @@
 
 This application will serve and store image filters
 
-Should have:
+Goals:
 *Stackable filters
 *Filter sharing
 *User specific filters
