@@ -4,20 +4,12 @@ This application will serve and store image filters
 
 Goals:
 
-*Stackable filters
-
-*Filter sharing
-
-*User specific filters
-
-*Guest filters for quick first time user creations
-
-*User logins
-
-*Eventually use somthing like imagur to store images
-
-*Maybe have canvas to allow user to draw own image
-
-*Filters entered in boxes or filter functions (write in javascript, send text to server and write to javascript file, reload javascript and create filter)
-
-*Filter time feedback
+* Stackable filters
+* Filter sharing
+* User specific filters
+* Guest filters for quick first time user creations
+* User logins
+* Eventually use somthing like imagur to store images
+* Maybe have canvas to allow user to draw own image
+* Filters entered in boxes or filter functions (write in javascript, send text to server and write to javascript file, reload javascript and create filter)
+* Filter time feedback
