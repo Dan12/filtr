@@ -1,6 +1,7 @@
 /* general */
 *{
   font-family:arial;
+  text-decoration: none;
 }
 
 body{
@@ -21,13 +22,13 @@ body{
 }
 
 .header{
-  font-size:60px;
-  letter-spacing:10px;
+  font-size:45px;
+  letter-spacing:4px;
   text-align:left;
 }
 
 .authactions{
-  font-size:40px;
+  font-size:30px;
   position:relative;
   bottom:4px;
 }
@@ -46,20 +47,20 @@ body{
 
 /* nav */
 .nav-container{
-  background-color:rgb(156,31,31);
+  background-color:rgb(31,112,156);
   border:1px solid black;
   border-radius:8px;
   padding:0 8px 4px;
   position:relative;
   z-index:-10;
-  box-shadow: 0 6px 14px 2px rgb(31,112,156);
+/*   box-shadow: 0 6px 14px 2px rgb(31,112,156); */
   color: rgb(237,237,237);
   font-weight:bold;
 }
 
 .nav-left, .nav-right{
   display:inline-block;
-  font-size:34px;
+  font-size:26px;
   margin: 4px 0;
 }
 
@@ -80,32 +81,33 @@ body{
   margin-left:-2px;
   border: 1px solid black;
   border-radius:4px;
-  background-color: rgb(100,100,100);
+  background-color: rgb(110,110,110);
   z-index:10;
   cursor:pointer;
 }
 
 /* popular */
-.popular-container{
+.section-container{
   border:1px solid black;
   border-radius:8px;
   background-color:rgb(237,237,237);
-  margin:40px 0;
-  box-shadow: 0 6px 14px 2px rgb(31,112,156);
+  margin:30px 0;
+/*   box-shadow: 0 6px 14px 2px rgb(31,112,156); */
 }
 
 .section-header{
   border-bottom: 4px solid darkgray;
   background-color:rgb(219,219,219);
   color: rgb(38,107,153);
+  border-radius:8px;
 }
 
-.popular-header, .popular-refresh{
+.section-header h2, .refresh{
   display:inline-block;
 }
 
-.popular-header{
-  font-size:40px;
+.section-header h2{
+  font-size:30px;
   margin:0;
   padding:14px 30px;
 }
@@ -115,9 +117,16 @@ body{
 }
 
 .refresh{
-  width:40px;
-  height:40px;
+  width:44px;
+  height:44px;
   position: relative;
+  cursor:pointer;
+  -webkit-transition: -webkit-transform 1ms linear;
+}
+
+.refresh:hover{
+  -webkit-transform: rotate(360deg);
+  -webkit-transition: -webkit-transform 300ms linear;
 }
 
 .section-item{
@@ -126,26 +135,30 @@ body{
 }
 
 .section-item-image{
-  width:160px;
-  height:160px;
+  width:120px;
+  height:120px;
   position:relative;
 }
 
 .section-item-content{
   position:absolute;
-  margin-top:-164px;
   padding:6px;
-  width:148px;
-  height:148px;
   overflow:hidden;
   background-color: rgba(0,40,75,0.5);
+  opacity:1;
+  -webkit-transition: opacity 200ms linear;
+  cursor:pointer;
 }
+
+.section-item-content:hover{
+  opacity:0;
+}
+
 
 .section-item-content span{
   display:block;
-  padding:9px 0;
-  font-size:22px;
-  max-width:148px;
+  padding:2px 0;
+  font-size:20px;
   overflow:hidden;
   color: rgb(227,227,227);
 }

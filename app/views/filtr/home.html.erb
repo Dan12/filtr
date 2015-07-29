@@ -13,27 +13,48 @@
   </div>
   <div class="nav-right">
     <span class="create">
-      Create
+      Create a Filter
     </span>
   </div>
 </div>
-<div class="popular-container">
+<div class="popular-container section-container">
   <div class="section-header">
     <h2 class="popular-header">Popular</h2>
-    <img class="popular-refresh refresh" src="/assets/temp.png" alt="refresh">
+    <img class="popular-refresh refresh" src="/assets/refresh.png" alt="refresh">
   </div>
   <div class="section-content">
-    <% for i in 1..20 do %>
+    <% for i in 1..10 do %>
     <div class="section-item">
       <img class="section-item-image" src="/assets/temp.png" alt="name">
-      <div class="section-item-content">
+      <a href="http://google.com" class="section-item-content">
+        <span class="section-item-name">
+          Laplacian Filter
+        </span>
+        <span class="section-item-views">
+          43 views
+        </span>
+      </a>
+    </div>
+    <%end%>
+  </div>
+</div>
+<div class="random-container section-container">
+  <div class="section-header">
+    <h2 class="random-header">Random</h2>
+    <img class="random-refresh refresh" src="/assets/refresh.png" alt="refresh">
+  </div>
+  <div class="section-content">
+    <% for i in 1..10 do %>
+    <div class="section-item">
+      <img class="section-item-image" src="/assets/temp.png" alt="name">
+      <a href="http://google.com" class="section-item-content">
         <span class="section-item-name">
           Name
         </span>
         <span class="section-item-views">
-          65 views
+          1 views
         </span>
-      </div>
+      </a>
     </div>
     <%end%>
   </div>
