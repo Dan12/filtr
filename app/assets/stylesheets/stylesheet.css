@@ -1,0 +1,151 @@
+/* general */
+*{
+  font-family:arial;
+}
+
+body{
+  margin:20px 30px;
+}
+
+/* header */
+.header-container{
+  background-color:rgb(237,237,237);
+  border:1px solid rgb(100,100,100);
+  border-radius:8px;
+  border-bottom:4px solid rgb(50,50,50);
+}
+
+.header, .authactions{
+  display:inline-block;
+  margin:0 10px;
+}
+
+.header{
+  font-size:60px;
+  letter-spacing:10px;
+  text-align:left;
+}
+
+.authactions{
+  font-size:40px;
+  position:relative;
+  bottom:4px;
+}
+
+.login, .signup{
+  border: 1px solid black;
+  border-radius:4px;
+  padding:2px 6px;
+  background-color:rgb(255,255,255);
+  cursor:pointer;
+}
+
+.login:hover, .signup:hover{
+  background-color:rgb(219,219,219);
+}
+
+/* nav */
+.nav-container{
+  background-color:rgb(156,31,31);
+  border:1px solid black;
+  border-radius:8px;
+  padding:0 8px 4px;
+  position:relative;
+  z-index:-10;
+  box-shadow: 0 6px 14px 2px rgb(31,112,156);
+  color: rgb(237,237,237);
+  font-weight:bold;
+}
+
+.nav-left, .nav-right{
+  display:inline-block;
+  font-size:34px;
+  margin: 4px 0;
+}
+
+.nav-left{
+  text-align:left;
+}
+
+.nav-right{
+  text-align:right;
+  position:relative;
+  left:0;
+  margin-top:6px;
+}
+
+.create{
+  padding:2px 6px;
+  margin:0;
+  margin-left:-2px;
+  border: 1px solid black;
+  border-radius:4px;
+  background-color: rgb(100,100,100);
+  z-index:10;
+  cursor:pointer;
+}
+
+/* popular */
+.popular-container{
+  border:1px solid black;
+  border-radius:8px;
+  background-color:rgb(237,237,237);
+  margin:40px 0;
+  box-shadow: 0 6px 14px 2px rgb(31,112,156);
+}
+
+.section-header{
+  border-bottom: 4px solid darkgray;
+  background-color:rgb(219,219,219);
+  color: rgb(38,107,153);
+}
+
+.popular-header, .popular-refresh{
+  display:inline-block;
+}
+
+.popular-header{
+  font-size:40px;
+  margin:0;
+  padding:14px 30px;
+}
+
+.section-content{
+  margin:20px 0;
+}
+
+.refresh{
+  width:40px;
+  height:40px;
+  position: relative;
+}
+
+.section-item{
+  display:inline-block;
+  margin: 6px;
+}
+
+.section-item-image{
+  width:160px;
+  height:160px;
+  position:relative;
+}
+
+.section-item-content{
+  position:absolute;
+  margin-top:-164px;
+  padding:6px;
+  width:148px;
+  height:148px;
+  overflow:hidden;
+  background-color: rgba(0,40,75,0.5);
+}
+
+.section-item-content span{
+  display:block;
+  padding:9px 0;
+  font-size:22px;
+  max-width:148px;
+  overflow:hidden;
+  color: rgb(227,227,227);
+}

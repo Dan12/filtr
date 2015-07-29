@@ -1,1 +1,40 @@
-<h1 class="header home_header">Filtr</h1>
+<div class="header-container">
+  <h1 class="header home-header">Filtr</h1>
+  <div class="authactions">
+    <span class="login">Login</span>
+    <span class="signup">Signup</span>
+  </div>
+</div>
+<div class="nav-container">
+  <div class="nav-left">
+    <span class="status">
+      Signed in as <span class="username">Guest</span>
+    </span>
+  </div>
+  <div class="nav-right">
+    <span class="create">
+      Create
+    </span>
+  </div>
+</div>
+<div class="popular-container">
+  <div class="section-header">
+    <h2 class="popular-header">Popular</h2>
+    <img class="popular-refresh refresh" src="/assets/temp.png" alt="refresh">
+  </div>
+  <div class="section-content">
+    <% for i in 1..20 do %>
+    <div class="section-item">
+      <img class="section-item-image" src="/assets/temp.png" alt="name">
+      <div class="section-item-content">
+        <span class="section-item-name">
+          Name
+        </span>
+        <span class="section-item-views">
+          65 views
+        </span>
+      </div>
+    </div>
+    <%end%>
+  </div>
+</div>
