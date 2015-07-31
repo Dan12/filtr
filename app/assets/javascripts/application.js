@@ -14,3 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require javascript
+//= require codemirror
+//= requore creationCode
+//= require homeReformat
+//= require generalReformat
+//= require reformat

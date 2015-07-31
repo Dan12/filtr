@@ -1,1 +1,41 @@
-<h1 class="header creation_center_header">Creation Center</h1>
+<div class="header-container">
+  <h1 class="header creation-center-header">Filtr</h1>
+  <div class="authactions">
+    <span class="login">Login</span>
+    <span class="signup">Signup</span>
+  </div>
+</div>
+<div class="nav-container">
+  <div class="nav-left">
+    <span class="status">
+      Signed in as <span class="username">Guest</span>
+    </span>
+  </div>
+  <div class="nav-right">
+    <a href="/">
+      <span class="home">Go Home</span>
+    </a>
+  </div>
+</div>
+<div class="create-filter-container section-container">
+  <div class="section-header">
+    <h2 class="create-filter-header">Create Filter</h2>
+  </div>
+  <div class="section-content">
+    <div class="manual-enter enter-tab">
+      <h3>Manual</h3>
+      <div class="filter-dim">
+        <label>Enter Filter Dimension(odd number): </label>
+        <input type="text" class="filter-dim-input" size="2" maxlength="2">
+        <div class="generate-filter generate-inputs">Generate</div>
+      </div>
+      <div class="filter-inputs"></div>
+    </div>
+    <div class="code-enter enter-tab">
+      <h3>Code</h3>
+    </div>
+    <div class="preview-container">
+      <canvas id="preview-canvas" class="preview-canvas">Canvas is not supported by your browser</canvas>
+    </div>
+  </div>
+</div>
