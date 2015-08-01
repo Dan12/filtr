@@ -231,17 +231,39 @@ input:focus{
   position:relative;
 }
 
-.CodeMirror{
-  width:50%;
-  height:50%;
+.CodeMirror, .preview-container{
+  width:40%;
 }
 
-.generate-code{
+.generate-code, .save-filter{
   margin-left:0;
 }
 
 .preview-container{
-  border:1px solid black;
-  width:40%;
   display:inline-block;
+  position:absolute;
+}
+
+.preview-canvas{
+  border:1px solid black;
+  width:100%;
+  height:100%;
+}
+
+.preview-container h3{
+  margin-top:0;
+}
+
+/* mashup filters */
+.mashup-preview, .mashup-layers, .mashup-library{
+  margin:0 20px;
+  border: 1px solid black;
+}
+
+.mashup-layers, .mashup-library{
+  position:absolute;
+}
+
+.mashup-filter-container h3{
+  margin-top:0;
 }
