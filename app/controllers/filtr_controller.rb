@@ -4,7 +4,7 @@ class FiltrController < ApplicationController
   end
   
   def creation_center
-    render "creationCenter"
+    render "create_filter"
   end
   
   def generate
@@ -14,5 +14,9 @@ class FiltrController < ApplicationController
     end
     output = `node /home/nitrous/code/Desktop/Rails_Apps/filtr/public/temp/generate.js`
     render :json => {"output" => output}
+  end
+  
+  def mashup_creator
+    render "create_mashup"
   end
 end

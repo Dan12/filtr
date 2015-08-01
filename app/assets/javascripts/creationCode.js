@@ -1,7 +1,7 @@
 function creationPageSetup(){
   var editor = CodeMirror(document.getElementsByClassName("code-enter")[0], {
     lineNumbers: true,
-    value: "//blur code\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n  for(var j = 0; j < dim; j++){\n    //output the value of the element at\n    //the ith row of the jth column of the filter matrix\n    console.log(1);\n  }\n};",
+    value: "//blur filter\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n  for(var j = 0; j < dim; j++){\n    //output the value of the element at\n    //the ith row of the jth column of the filter matrix\n    console.log(1);\n  }\n};",
     mode:  "javascript",
   });
   
@@ -36,9 +36,9 @@ function creationPageSetup(){
         } 
       }
       creationReformat();
-      updateImage(false);
+      updateImage();
       $(".filter-input-col").blur(function(){
-        updateImage(false);
+        updateImage();
       });
     }
   });
@@ -48,30 +48,40 @@ function creationPageSetup(){
   image = new Image();
   image.src = "/assets/img"+randNum(1,4)+".jpeg";
   image.onload = function(){
-    updateImage(true);
+    updateImage();
   }
+  
+  $(".filter-preview-refresh").click(function(){
+    image.src = "/assets/img"+randNum(1,4)+".jpeg";
+    image.onload = function(){
+      updateImage();
+    }
+  });
   
   creationReformat();
   
   $(window).resize(function(){
-    creationReformat();
+    if($(".creation-center-header").html() !== undefined){
+      creationReformat();
+    }
   });
 }
 
-function updateImage(init){
+function updateImage(){
   canvas.drawImage(image,0,0,canvElem.width,canvElem.height);
   var temp = canvas.getImageData(0,0,canvElem.width,canvElem.height);
   var weight = [[0,0,0],
                 [0,1,0],
                 [0,0,0]];
-  if(!init){
+  if($(".filter-input-0").html() !== undefined){
     var dim = parseInt($(".filter-dim-input").val());
     var inArr = [dim];
     for(var i = 0; i < dim; i++){
       for(var k = 0; k < dim; k++){
-        inArr.push(parseInt($(".filter-input-"+(i*dim+k)+"").val()));
+        inArr.push(parseFloat($(".filter-input-"+(i*dim+k)+"").val()));
       }
     }
+    console.log(inArr);
     weight = generateWeights(inArr);
   }
   drawImage(canvElem.width,canvElem.height,processImage(temp.data,canvElem.height,canvElem.width,weight,4),canvas);
@@ -83,13 +93,9 @@ function creationReformat(){
   $(".preview-canvas").css({"height":$(".CodeMirror").width()+"px"});
   $(".preview-container").css({"top":($(".code-enter").offset().top-$(".preview-container").offset().top)+"px","left":($(".code-enter").width()-$(".preview-container").width()+20)+"px"});
   
-  var containerWidth = $(".section-content").width()-40;
-  var containerLeft = $(".section-content").offset().left;
-  $(".mashup-preview, .mashup-layers, .mashup-library").css("width",((containerWidth-30)/3)+"px");
-  $(".mashup-layers").css("left",((containerWidth/3)+containerLeft+5)+"px");
-  $(".mashup-library").css("left",((containerWidth*2/3)+containerLeft+10)+"px");
-  $(".mashup-layers, .mashup-library").css("top","0");
-  $(".mashup-layers, .mashup-library").css("top",($(".mashup-preview").offset().top)+"px");
+  $(".filter-preview-refresh").css({"margin-top":"0","top":"0"})
+  $(".filter-preview-refresh").css("margin-top",($(".code-enter h3").offset().top-$(".preview-container h3").offset().top)+"px");
+  $(".filter-preview-refresh").css("top",(16)+"px");
 }
 
 function generateInputsFromCode(output){
@@ -106,9 +112,9 @@ function generateInputsFromCode(output){
       } 
     }
     creationReformat();
-    updateImage(false);
+    updateImage();
     $(".filter-input-col").blur(function(){
-      updateImage(false);
+      updateImage();
     });
   }
 }

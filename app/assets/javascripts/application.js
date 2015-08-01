@@ -20,4 +20,5 @@
 //= requore creationCode
 //= require homeReformat
 //= require generalReformat
+//= require mashupCode
 //= require reformat

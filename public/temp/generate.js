@@ -1,4 +1,4 @@
-//blur code
+//blur filter
 var dim = 3;
 //your first output has to be the dimension of the filter
 console.log(dim);
