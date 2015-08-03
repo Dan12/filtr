@@ -14,9 +14,16 @@ $(window).bind('page:change', function() {
   else if($(".mashup-filter-container").html() !== undefined){
     mashupPageSetup();
   }
+  else if($(".edit-information-container").html() !== undefined){
+    editPageSetup();
+  }
   
   generalReformat();
   $(window).resize(function(){
     generalReformat();
+  });
+  
+  $(".menu-image").click(function(){
+    $(".user-nav-container").toggle(200);
   });
 });

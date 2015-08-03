@@ -1,8 +1,15 @@
 function generalReformat(){
+  
   var headerRight = $(".authactions");
   var headerContainer = $(".header-container");
   headerRight.css("left","0");
   headerRight.css("left",((headerContainer.offset().left+headerContainer.outerWidth())-(headerRight.offset().left+headerRight.outerWidth()+10))+"px");
+  if($(".login").html() == undefined){
+    $(".menu-image").css({"top":"0"});
+    $(".menu-image").css({"top":($(".header").offset().top-$(".menu-image").offset().top+5)+"px"});
+    $(".user-nav-container div").css("margin","10px");
+    $(".user-nav-container div").css("margin","10px "+((($(".user-nav-container").offset().left+$(".user-nav-container").width())-($(".user-nav-container .last").offset().left+$(".user-nav-container .last").width()))/8)+"px");
+  }
   
   var navRight = $(".nav-right");
   var nav = $(".nav-container");

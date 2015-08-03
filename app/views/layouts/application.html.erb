@@ -12,13 +12,23 @@
   <div class="header-container">
     <h1 class="header creation-center-header">Filtr</h1>
     <div class="authactions">
+      <%if false%>
       <a href="/login">
         <span class="login">Login</span>
       </a>
       <a href="/signup">
         <span class="signup">Signup</span>
       </a>
+      <%else%>
+      <img class="menu-image" alt="menu" src="/assets/menu.png">
+      <%end%>
     </div>
+  </div>
+  <div class="user-nav-container">
+    <a href="/mashup_creator"><div class="button-1">Create a Mashup</div></a>
+    <a href="/users/show"><div class="button-1">Profile Page</div></a>
+    <a href="/users/edit"><div class="button-1">Edit Profile</div></a>
+    <a href="/logout"><div class="button-1 last">Sign out</div></a>
   </div>
   <div class="nav-container">
     <div class="nav-left">

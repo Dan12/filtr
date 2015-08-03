@@ -7,6 +7,10 @@ class UsersController < ApplicationController
     render "login"
   end
   
+  def logout
+    
+  end
+  
   def create
     
   end

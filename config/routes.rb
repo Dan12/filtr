@@ -28,4 +28,7 @@ Rails.application.routes.draw do
   
   #login
   get "/login" => "users#login"
+  
+  #logout
+  get "/logout" => "users#logout"
 end
