@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require functions
+//= require scrollControl
 //= require javascript
 //= require codemirror
 //= requore creationCode

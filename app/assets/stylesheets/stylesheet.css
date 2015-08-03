@@ -279,31 +279,13 @@ input:focus{
   position:absolute;
 }
 
-.mashup-filter-container h3{
-  margin-top:0;
-}
-
-.mashup-layers-container, .mashup-preview-canvas, .mashup-library-container{
+.mashup-layers-canvas, .mashup-preview-canvas{
   border: 1px solid black;
-  overflow-y:scroll;
-}
-
-.mashup-layer-filter-thumbnail, .mashup-library-filter-thumbnail{
-  width:60px;
-  height:60px;
-  position:relative;
-}
-
-.mashup-layer-filter-name, .mashup-library-filter-name{
-  padding:4px;
-  font-size:24px;
-}
-
-.mashup-layer-filter, .mashup-library-filter{
-  height:60px;
-  border-bottom:1px solid black;
-  overflow:hidden;
   cursor:pointer;
+}
+
+.mashup-layers h3, .mashup-library h3{
+  margin-top:0;
 }
 
 /* signup */
