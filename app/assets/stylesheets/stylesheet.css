@@ -272,7 +272,7 @@ input:focus{
 }
 
 /* signup */
-.signup-container .section-content{
+.signup-container .section-content, .login-container .section-content{
   display:inline-block;
   margin:10px 0;
   text-align:right;
