@@ -24,6 +24,8 @@ $(window).bind('page:change', function() {
   });
   
   $(".menu-image").click(function(){
-    $(".user-nav-container").toggle(200);
+//     $(".user-nav-container").toggle(200, function(){
+//        $(window).trigger('resize');
+//     });
   });
 });

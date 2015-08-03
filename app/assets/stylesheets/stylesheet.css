@@ -273,7 +273,6 @@ input:focus{
 /* mashup filters */
 .mashup-preview, .mashup-layers, .mashup-library{
   margin:0 20px;
-  border: 1px solid black;
 }
 
 .mashup-layers, .mashup-library{
@@ -282,6 +281,29 @@ input:focus{
 
 .mashup-filter-container h3{
   margin-top:0;
+}
+
+.mashup-layers-container, .mashup-preview-canvas, .mashup-library-container{
+  border: 1px solid black;
+  overflow-y:scroll;
+}
+
+.mashup-layer-filter-thumbnail, .mashup-library-filter-thumbnail{
+  width:60px;
+  height:60px;
+  position:relative;
+}
+
+.mashup-layer-filter-name, .mashup-library-filter-name{
+  padding:4px;
+  font-size:24px;
+}
+
+.mashup-layer-filter, .mashup-library-filter{
+  height:60px;
+  border-bottom:1px solid black;
+  overflow:hidden;
+  cursor:pointer;
 }
 
 /* signup */
