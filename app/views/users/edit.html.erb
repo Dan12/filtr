@@ -1,0 +1,63 @@
+<div class="edit-information-container section-container">
+  <div class="section-header">
+    <h2 class="edit-profile-header">Edit Profile</h2>
+  </div>
+  <div class="section-content-edit-mod">
+    <form action="">
+      <div class="form-input">
+        <label>Username</label>
+        <input type="text" name="username">
+      </div>
+      <div class="form-input">
+        <label>Password</label>
+        <input type="password" name="password">
+      </div>
+      <div class="form-input">
+        <label>Confirm Password</label>
+        <input type="password" name="password_confirmation">
+      </div>
+      <input type="submit" class="button-1" value="Save">
+    </form>
+  </div>
+</div>
+<div class="edit-filters-container section-container">
+  <div class="section-header">
+    <h2 class="edit-filters-header">Edit Filters</h2>
+  </div>
+  <div class="section-content">
+    <h2>My Filters</h2>
+    <div class="user-filters">
+      <% for i in 1..10 do %>
+      <div class="section-item">
+        <img class="section-item-image" src="/assets/temp.png" alt="name">
+        <a href="http://google.com" class="section-item-content">
+          <span class="section-item-name">
+            Laplacian Filter
+          </span>
+          <span class="section-item-views">
+            43 views
+          </span>
+        </a>
+      </div>
+      <%end%>
+    </div>
+  </div>
+  <div class="section-content">
+    <h2>My Library</h2>
+    <div class="user-library">
+      <% for i in 1..10 do %>
+      <div class="section-item">
+        <img class="section-item-image" src="/assets/temp.png" alt="name">
+        <a href="http://google.com" class="section-item-content">
+          <span class="section-item-name">
+            Laplacian Filter
+          </span>
+          <span class="section-item-views">
+            43 views
+          </span>
+        </a>
+      </div>
+      <%end%>
+    </div>
+  </div>
+<div>

@@ -272,7 +272,7 @@ input:focus{
 }
 
 /* signup */
-.signup-container .section-content, .login-container .section-content{
+.signup-container .section-content, .login-container .section-content, .section-content-edit-mod{
   display:inline-block;
   margin:10px 0;
   text-align:right;
@@ -284,4 +284,9 @@ form, form input{
 
 .form-input{
   margin:10px
+}
+
+/* show user */
+.section-content h2{
+  margin:6px;
 }

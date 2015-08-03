@@ -18,8 +18,6 @@
 //= require codemirror
 //= requore creationCode
 //= require homeReformat
-//= require signup
-//= require showUser
 //= require generalReformat
 //= require mashupCode
 //= require reformat
