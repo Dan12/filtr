@@ -2,7 +2,7 @@ function mashupPageSetup(){
   mashupPageReformat();
   
   $(window).resize(function(){
-    if($(".mashup-header").html() !== undefined){
+    if($(".mashup-filter-container").html() !== undefined){
       mashupPageReformat();
     }
   });

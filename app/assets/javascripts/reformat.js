@@ -1,18 +1,21 @@
 $(window).bind('page:change', function() {
   
-  if($(".home-header").html() !== undefined){
+  if($(".popular-container").html() !== undefined){
     homePageFormat();
     $(window).resize(function(){
-      if($(".home-header").html() !== undefined){
+      if($(".popular-container").html() !== undefined){
         homePageFormat();
       }
     });
   }
-  else if($(".creation-center-header").html() !== undefined){
+  else if($(".create-filter-container").html() !== undefined){
     creationPageSetup();
   }
-  else if($(".mashup-header").html() !== undefined){
+  else if($(".mashup-filter-container").html() !== undefined){
     mashupPageSetup();
+  }
+  else if($(".signup-container").html() !== undefined){
+    signupPageSetup();
   }
   
   generalReformat();

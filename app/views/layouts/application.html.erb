@@ -9,6 +9,35 @@
 <body>
 
 <div class="container">
+  <div class="header-container">
+    <h1 class="header creation-center-header">Filtr</h1>
+    <div class="authactions">
+      <a href="/login">
+        <span class="login">Login</span>
+      </a>
+      <a href="/signup">
+        <span class="signup">Signup</span>
+      </a>
+    </div>
+  </div>
+  <div class="nav-container">
+    <div class="nav-left">
+      <span class="status">
+        Signed in as <span class="username">Guest</span>
+      </span>
+    </div>
+    <div class="nav-right">
+      <%if @isHome == nil%>
+      <a href="/">
+        <span class="home">Home</span>
+      </a>
+      <%else%>
+      <a href="/creation_center">
+        <span class="create">Create a Filtr</span>
+      </a>
+      <%end%>
+    </div>
+  </div>
   <%= yield %>
 </div>
 

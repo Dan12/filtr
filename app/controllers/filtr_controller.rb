@@ -1,5 +1,6 @@
 class FiltrController < ApplicationController
   def home
+    @isHome = true
     render "home"
   end
   
@@ -18,5 +19,9 @@ class FiltrController < ApplicationController
   
   def mashup_creator
     render "create_mashup"
+  end
+  
+  def show_filter
+    render "show_filter"
   end
 end

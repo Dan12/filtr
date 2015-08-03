@@ -1,11 +1,11 @@
 function creationPageSetup(){
   var editor = CodeMirror(document.getElementsByClassName("code-enter")[0], {
     lineNumbers: true,
-    value: "//blur filter\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n  for(var j = 0; j < dim; j++){\n    //output the value of the element at\n    //the ith row of the jth column of the filter matrix\n    console.log(1);\n  }\n};",
+    value: "//blur filter\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n\tfor(var j = 0; j < dim; j++){\n\t\t//output the value of the element at\n\t\t//the ith row of the jth column of the filter matrix\n\t\tconsole.log(1);\n\t}\n};",
     mode:  "javascript",
   });
   
-  $(".code-enter").append('<div class="generate-filter generate-code">Generate</div>');
+  $(".code-enter").append('<div class="button-1 generate-code">Generate</div>');
   
   $(".generate-code").click(function(){
     var val = editor.getValue();
@@ -61,7 +61,7 @@ function creationPageSetup(){
   creationReformat();
   
   $(window).resize(function(){
-    if($(".creation-center-header").html() !== undefined){
+    if($(".create-filter-container").html() !== undefined){
       creationReformat();
     }
   });

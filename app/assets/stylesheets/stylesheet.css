@@ -189,7 +189,7 @@ body{
 input{
   border-radius:4px;
   border: 1px solid lightgray;
-  padding:2px;
+  padding:4px 6px;
 }
 
 input:focus{
@@ -199,9 +199,10 @@ input:focus{
 .filter-dim input{
   font-size:24px;
   display:inline-block;
+  text-align:center;
 }
 
-.generate-filter{
+.button-1{
   font-size:22px;
   padding:2px 6px;
   border:1px solid black;
@@ -214,7 +215,7 @@ input:focus{
   transition: background-color 200ms linear, color 200ms linear;
 }
 
-.generate-filter:hover{
+.button-1:hover{
   background-color:rgb(150,150,150);
 }
 
@@ -225,6 +226,7 @@ input:focus{
 .filter-input-col{
   font-size: 18px;
   margin:4px 12px 4px 0;
+  text-align:center;
 }
 
 .code-enter{
@@ -267,4 +269,19 @@ input:focus{
 
 .mashup-filter-container h3{
   margin-top:0;
+}
+
+/* signup */
+.signup-container .section-content{
+  display:inline-block;
+  margin:10px 0;
+  text-align:right;
+}
+
+form, form input{
+  font-size: 24px;
+}
+
+.form-input{
+  margin:10px
 }
