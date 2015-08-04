@@ -8,7 +8,7 @@ function generalReformat(){
     $(".menu-image").css({"top":"0"});
     $(".menu-image").css({"top":($(".header").offset().top-$(".menu-image").offset().top+5)+"px"});
     $(".user-nav-container div").css("margin","10px");
-    $(".user-nav-container div").css("margin","10px "+((($(".user-nav-container").offset().left+$(".user-nav-container").width())-($(".user-nav-container .last").offset().left+$(".user-nav-container .last").width()))/8)+"px");
+    $(".user-nav-container div").css("margin","10px "+((($(".user-nav-container").offset().left+$(".user-nav-container").width())-($(".user-nav-container a:last").offset().left+$(".user-nav-container a:last").width()))/8)+"px");
   }
   
   var navRight = $(".nav-right");
@@ -47,5 +47,16 @@ function generalReformat(){
       $(".section-content-edit-mod form").css("margin","0");
       $(".section-content-edit-mod form").css("margin","0 "+Math.floor((($(".section-container").width()-$(".section-content-edit-mod form").width())/2-1))+"px");
     }
+  }
+  
+  if($(".create-filter-container").html() !== undefined || $(".show-filter-container").html() !== undefined){
+    $(".CodeMirror").css("height",$(".CodeMirror").width()+"px");
+    $(".preview-container").css({"top":"0","left":"0"});
+    $(".preview-canvas").css({"height":$(".CodeMirror").width()+"px"});
+    $(".preview-container").css({"top":($(".code-enter").offset().top-$(".preview-container").offset().top)+"px","left":($(".code-enter").width()-$(".preview-container").width()+20)+"px"});
+    
+    $(".filter-preview-refresh").css({"margin-top":"0","top":"0"})
+    $(".filter-preview-refresh").css("margin-top",($(".code-enter h3").offset().top-$(".preview-container h3").offset().top)+"px");
+    $(".filter-preview-refresh").css("top",(16)+"px");
   }
 }

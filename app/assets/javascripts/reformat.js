@@ -17,6 +17,9 @@ $(window).bind('page:change', function() {
   else if($(".edit-information-container").html() !== undefined){
     editPageSetup();
   }
+  else if($(".show-filter-container").html() !== undefined){
+    showFilterPageSetup();
+  }
   
   generalReformat();
   $(window).resize(function(){

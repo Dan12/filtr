@@ -13,7 +13,7 @@ class FiltrController < ApplicationController
     File.open("#{Rails.root}/public/temp/generate.js", 'wb') do |f|
       f.write code
     end
-    output = `node /home/nitrous/code/Desktop/Rails_Apps/filtr/public/temp/generate.js`
+    output = `node /home/ubuntu/workspace/rails/filtr/public/temp/generate.js`
     render :json => {"output" => output}
   end
   

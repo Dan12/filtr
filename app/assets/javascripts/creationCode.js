@@ -14,6 +14,7 @@ function creationPageSetup(){
         url: "/generate_code",
         data: {code: val},
         success: function(data, textStatus, jqXHR) {
+          console.log(jqXHR);
           generateInputsFromCode(jqXHR.responseJSON.output);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -32,7 +33,7 @@ function creationPageSetup(){
           var value = 0;
           if(k == (dim+1)/2 && i == (dim+1)/2)
             value = 1;
-          $(".filter-input-row:last-of-type").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
+          $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
         } 
       }
       creationReformat();
@@ -108,7 +109,7 @@ function generateInputsFromCode(output){
       $(".filter-inputs").append('<div class="filter-input-row"></div>');
       for(var k = 1; k <= dim; k++){
         var value = outArr[(i-1)*dim+k];
-        $(".filter-input-row:last-of-type").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
+        $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
       } 
     }
     creationReformat();

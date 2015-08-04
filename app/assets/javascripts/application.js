@@ -18,6 +18,7 @@
 //= require scrollControl
 //= require javascript
 //= require codemirror
+//= require showFilter
 //= requore creationCode
 //= require homeReformat
 //= editCode

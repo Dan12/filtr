@@ -308,6 +308,10 @@ form, form input{
   margin:6px;
 }
 
+.to-edit-page{
+  margin-left: 0;
+}
+
 /* edit user */
 .section-item-delete{
   position:absolute;
