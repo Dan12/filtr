@@ -1,9 +1,11 @@
 function mashupPageSetup(){
   mashupPageReformat();
+  setupMashup();
   
   $(window).resize(function(){
     if($(".mashup-filter-container").html() !== undefined){
       mashupPageReformat();
+      mashupCanvasReformat();
     }
   });
 }
@@ -19,26 +21,40 @@ function mashupPageReformat(){
   $(".mashup-library").css("left",((containerWidth*2/3)+containerLeft+10)+"px");
   $(".mashup-layers, .mashup-library").css("top","0");
   $(".mashup-layers, .mashup-library").css("top",($(".mashup-preview").offset().top)+"px");
-
-  setupMashup(containerWidth);
+  width = ((containerWidth-30)/3);
 }
 
-function setupMashup(containerWidth){
+function mashupCanvasReformat(){
+  previewContext.drawImage(previewImage,0,0,width,width);
+  for(var i=0; i<libraryarray.length; i++){
+    libraryarray[i].x=width+padding;
+  }
+  context.fillStyle="black";
+  context.strokeStyle="black";
+  context.font=((boxHeight-6)/2)+"px Arial";
+  context.lineWidth=1;
+  context.translate(-1,-1);
+  drawObjects();
+}
+
+function setupMashup(){
   previewCanvas = document.getElementById("mashup-preview-canvas");
   previewContext = previewCanvas.getContext("2d");
   previewImage = new Image();
   previewImage.src = "/assets/img1.jpeg";
   previewImage.onload = function(){
-    previewContext.drawImage(previewImage,0,0,((containerWidth-30)/3),((containerWidth-30)/3));
+    previewContext.drawImage(previewImage,0,0,width,width);
   }
   
   layersCanvas = document.getElementById("mashup-layers-canvas");
   context = layersCanvas.getContext("2d");
-  width = ((containerWidth-30)/3);
   layersScrollY = 0;
   libraryScrollY = 0;
   padding = 15;
   boxHeight = 70;
+  dragItem = null;
+  prevX = -1;
+  prevY = -1;
   
   layerarray = [];
   for(var i = 0; i < 1; i++){
@@ -47,10 +63,10 @@ function setupMashup(containerWidth){
     layerarray.push({name:"",thumb:tempImg,x:0,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
   }
   libraryarray = [];
-  for(var i = 0; i < 3; i++){
+  for(var i = 0; i < 10; i++){
     var tempImg = new Image();
     tempImg.src="/assets/temp.png";
-    libraryarray.push({name:"name name name name name name",thumb:tempImg,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
+    libraryarray.push({name:""+Math.floor(Math.random()*100000000),thumb:tempImg,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
   }
   
   context.fillStyle="black";
@@ -88,6 +104,9 @@ function setupMashup(containerWidth){
     drawObjects();
     return false; 
   }, false);
+  
+  setupClicks();
+  
   drawObjects();
 }
 
@@ -103,6 +122,13 @@ function drawObjects(){
     if(layerarray[i].thumb.src != ""){
       context.drawImage(layerarray[i].thumb,layerarray[i].x+width-layerarray[i].width,layerarray[i].y+layersScrollY,layerarray[i].width,layerarray[i].height);
       drawFitText(context,layerarray[i].name,layerarray[i].x,layerarray[i].y+layersScrollY,width-layerarray[i].width,layerarray[i].height)
+    }
+  }
+  if(dragItem != null){
+    context.strokeRect(dragItem.x-1,dragItem.y-1,width,dragItem.height+2);
+    if(dragItem.thumb.src != ""){
+      context.drawImage(dragItem.thumb,dragItem.x+width-dragItem.w,dragItem.y,dragItem.width,dragItem.height);
+      drawFitText(context,dragItem.name,dragItem.x,dragItem.y,width-dragItem.width,dragItem.height)
     }
   }
 }
@@ -127,4 +153,52 @@ function drawFitText(context,text,x,y,w,h){
   }
   else
     context.fillText(text,x,y+h*3/4-6);
+}
+
+function setupClicks(){
+  $("#mashup-layers-canvas").mousedown(function(e){
+    var mouseX = e.pageX - $("#mashup-layers-canvas").offset().left;
+    var mouseY = e.pageY - $("#mashup-layers-canvas").offset().top;
+    //console.log(mouseX+","+mouseY+","+$("#mashup-layers-canvas").offset().top)
+    for(var i = 0; i < libraryarray.length; i++){
+      if(mouseX >= libraryarray[i].x && mouseX <= libraryarray[i].x+width && mouseY >= libraryarray[i].y+libraryScrollY && mouseY <= libraryarray[i].y+libraryarray[i].height+libraryScrollY){
+        dragItem = {name:libraryarray[i].name,thumb:libraryarray[i].thumb,x:libraryarray[i].x,y:libraryarray[i].y+libraryScrollY,width:libraryarray[i].width,height:libraryarray[i].height};
+        prevX = mouseX;
+        prevY = mouseY;
+        break;
+      }
+    }
+  });
+  
+  $("#mashup-layers-canvas").mousemove(function(e){
+    if(dragItem != null){
+      var mouseX = e.pageX - $("#mashup-layers-canvas").offset().left;
+      var mouseY = e.pageY - $("#mashup-layers-canvas").offset().top;
+      dragItem.x+=mouseX-prevX;
+      dragItem.y+=mouseY-prevY;
+      prevX = mouseX;
+      prevY = mouseY;
+      drawObjects();
+    }
+  });
+  
+  $("#mashup-layers-canvas").mouseup(function(e){
+    if(dragItem != null){
+      var mouseX = e.pageX - $("#mashup-layers-canvas").offset().left;
+      var mouseY = e.pageY - $("#mashup-layers-canvas").offset().top;
+      if(mouseX >= layerarray[layerarray.length-1].x && mouseX <= layerarray[layerarray.length-1].x+width && mouseY >= layerarray[layerarray.length-1].y && mouseY <= layerarray[layerarray.length-1].y+layerarray[layerarray.length-1].height){
+        dragItem.x=layerarray[layerarray.length-1].x;
+        dragItem.y=layerarray[layerarray.length-1].y;
+        layerarray[layerarray.length-1].y+=boxHeight;
+        layerarray.splice(layerarray.length-1,0,dragItem);
+      }
+      dragItem = null;
+      drawObjects();
+    }
+  });
+  
+  $("#mashup-layers-canvas").mouseleave(function(e){
+    dragItem = null;
+    drawObjects();
+  });
 }
