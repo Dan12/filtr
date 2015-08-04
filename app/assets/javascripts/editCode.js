@@ -5,6 +5,9 @@ function editPageSetup(){
       editPageReformat();
     }
   });
+  $(".section-item-delete").click(function(){
+    console.log($(this).attr("number"));
+  });
 }
 
 function editPageReformat(){

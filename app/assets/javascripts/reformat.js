@@ -26,6 +26,11 @@ $(window).bind('page:change', function() {
     generalReformat();
   });
   
+  $(".section-item-views").each(function(){
+    if(parseInt($(this).text()) == 1)
+      $(this).text("1 view");
+  })
+  
   $(".menu-image").click(function(){
 //     $(".user-nav-container").toggle(200, function(){
 //        $(window).trigger('resize');

@@ -21,7 +21,7 @@
 //= require showFilter
 //= requore creationCode
 //= require homeReformat
-//= editCode
+//= require editCode
 //= require generalReformat
 //= require mashupCode
 //= require reformat
