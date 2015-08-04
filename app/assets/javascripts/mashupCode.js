@@ -35,8 +35,19 @@ function setupMashup(containerWidth){
   layersCanvas = document.getElementById("mashup-layers-canvas");
   context = layersCanvas.getContext("2d");
   width = ((containerWidth-30)/3);
-  scrolly = 0;
+  layersScrollY = 0;
+  libraryScrollY = 0;
   padding = 15;
+  boxHeight = 60;
+  
+  layerarray = [];
+  libraryarray = [];
+  for(var i = 0; i < 10; i++){
+    var tempImg = new Image();
+    tempImg.src="/assets/temp.png";
+    libraryarray.push({name:"name name name name",thumb:tempImg,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-1,height:boxHeight-1});
+  }
+  
   context.fillStyle="black";
   context.strokeStyle="black";
   context.lineWidth=1;
@@ -48,9 +59,16 @@ function setupMashup(containerWidth){
     enableScroll();
   });
   layersCanvas.addEventListener('mousewheel',function(event){
-    scrolly+=event.deltaY;
-    if(scrolly > 0)
-      scrolly = 0;
+    if(event.layerX<width)
+      layersScrollY+=event.deltaY;
+    else if(event.layerX>width+padding)
+      libraryScrollY+=event.deltaY;
+    if(layersScrollY > 0)
+      layersScrollY = 0;
+    if(libraryScrollY > 0)
+      libraryScrollY = 0;
+    if(libraryScrollY < -libraryarray[libraryarray.length-1].y-libraryarray[libraryarray.length-1].height+width)
+      libraryScrollY = -libraryarray[libraryarray.length-1].y-libraryarray[libraryarray.length-1].height+width;
     drawObjects();
     return false; 
   }, false);
@@ -58,9 +76,13 @@ function setupMashup(containerWidth){
 }
 
 function drawObjects(){
-  context.clearRect(0,0,layersCanvas.width,layersCanvas.width);
-  context.strokeRect(0,scrolly,width,40);
-  context.strokeRect(0,scrolly+40,width,40);
-  context.strokeRect(width+padding,scrolly,width,40);
-  context.strokeRect(width+padding,scrolly+40,width,40);
+  context.clearRect(0,0,layersCanvas.width+1,layersCanvas.width+1);
+  for(var i=0; i<libraryarray.length; i++){
+    context.strokeRect(libraryarray[i].x-1,libraryarray[i].y-1+libraryScrollY,width,libraryarray[i].height+1);
+    context.drawImage(libraryarray[i].thumb,libraryarray[i].x,libraryarray[i].y+libraryScrollY,libraryarray[i].width,libraryarray[i].height);
+  }
+//   context.strokeRect(0,layersScrollY,width,boxHeight);
+//   context.strokeRect(0,layersScrollY+boxHeight,width,boxHeight);
+//   context.strokeRect(width+padding,libraryScrollY,width,boxHeight);
+//   context.strokeRect(width+padding,libraryScrollY+boxHeight,width,boxHeight);
 }
