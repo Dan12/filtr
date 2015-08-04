@@ -60,13 +60,13 @@ function setupMashup(){
   for(var i = 0; i < 1; i++){
     var tempImg = new Image();
     tempImg.src = "";
-    layerarray.push({name:"",thumb:tempImg,x:0,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
+    layerarray.push({id:-1,name:"",thumb:tempImg,x:0,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
   }
   libraryarray = [];
   for(var i = 0; i < 10; i++){
     var tempImg = new Image();
     tempImg.src="/assets/temp.png";
-    libraryarray.push({name:""+Math.floor(Math.random()*100000000),thumb:tempImg,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
+    libraryarray.push({id:i,name:""+Math.floor(Math.random()*100000000),thumb:tempImg,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
   }
   
   context.fillStyle="black";
@@ -119,16 +119,25 @@ function drawObjects(){
   }
   for(var i=0; i<layerarray.length; i++){
     context.strokeRect(layerarray[i].x-1,layerarray[i].y-1+layersScrollY,width,layerarray[i].height+2);
-    if(layerarray[i].thumb.src != ""){
+    if(layerarray[i].id != -1){
       context.drawImage(layerarray[i].thumb,layerarray[i].x+width-layerarray[i].width,layerarray[i].y+layersScrollY,layerarray[i].width,layerarray[i].height);
       drawFitText(context,layerarray[i].name,layerarray[i].x,layerarray[i].y+layersScrollY,width-layerarray[i].width,layerarray[i].height)
     }
   }
   if(dragItem != null){
     context.strokeRect(dragItem.x-1,dragItem.y-1,width,dragItem.height+2);
-    if(dragItem.thumb.src != ""){
-      context.drawImage(dragItem.thumb,dragItem.x+width-dragItem.w,dragItem.y,dragItem.width,dragItem.height);
-      drawFitText(context,dragItem.name,dragItem.x,dragItem.y,width-dragItem.width,dragItem.height)
+    context.drawImage(dragItem.thumb,dragItem.x+width-dragItem.w,dragItem.y,dragItem.width,dragItem.height);
+    drawFitText(context,dragItem.name,dragItem.x,dragItem.y,width-dragItem.width,dragItem.height)
+  }
+}
+
+function drawImageLayers(context){
+  console.log("starting");
+  for(var i = 0; i < layerarray.length; i++){
+    if(layerarray[i].id != -1){
+      var temp = previewContext.getImageData(0,0,width,width);
+      var weight = weights[layerarray[i].id].weight
+      drawImage(temp.width,temp.height,processImage(temp.data,temp.height,temp.width,weight,4),previewContext);
     }
   }
 }
@@ -162,7 +171,7 @@ function setupClicks(){
     //console.log(mouseX+","+mouseY+","+$("#mashup-layers-canvas").offset().top)
     for(var i = 0; i < libraryarray.length; i++){
       if(mouseX >= libraryarray[i].x && mouseX <= libraryarray[i].x+width && mouseY >= libraryarray[i].y+libraryScrollY && mouseY <= libraryarray[i].y+libraryarray[i].height+libraryScrollY){
-        dragItem = {name:libraryarray[i].name,thumb:libraryarray[i].thumb,x:libraryarray[i].x,y:libraryarray[i].y+libraryScrollY,width:libraryarray[i].width,height:libraryarray[i].height};
+        dragItem = {id:libraryarray[i].id,name:libraryarray[i].name,thumb:libraryarray[i].thumb,x:libraryarray[i].x,y:libraryarray[i].y+libraryScrollY,width:libraryarray[i].width,height:libraryarray[i].height};
         prevX = mouseX;
         prevY = mouseY;
         break;
@@ -186,11 +195,12 @@ function setupClicks(){
     if(dragItem != null){
       var mouseX = e.pageX - $("#mashup-layers-canvas").offset().left;
       var mouseY = e.pageY - $("#mashup-layers-canvas").offset().top;
-      if(mouseX >= layerarray[layerarray.length-1].x && mouseX <= layerarray[layerarray.length-1].x+width && mouseY >= layerarray[layerarray.length-1].y && mouseY <= layerarray[layerarray.length-1].y+layerarray[layerarray.length-1].height){
+      if(mouseX >= layerarray[layerarray.length-1].x && mouseX <= layerarray[layerarray.length-1].x+width && mouseY >= layerarray[layerarray.length-1].y+layersScrollY && mouseY <= layerarray[layerarray.length-1].y+layerarray[layerarray.length-1].height+layersScrollY){
         dragItem.x=layerarray[layerarray.length-1].x;
         dragItem.y=layerarray[layerarray.length-1].y;
         layerarray[layerarray.length-1].y+=boxHeight;
         layerarray.splice(layerarray.length-1,0,dragItem);
+        drawImageLayers(context);
       }
       dragItem = null;
       drawObjects();
@@ -202,3 +212,20 @@ function setupClicks(){
     drawObjects();
   });
 }
+
+weights = [{
+  id:1,
+  weight:[[ 0,-1, 0],
+  [-1, 5,-1],
+  [ 0,-1, 0]]
+},{
+  id:2,
+  weight:[[1/9,1/9,1/9,1/9],
+  [1/9,1/9,1/9,1/9],
+  [1/9,1/9,1/9,1/9]]
+},{
+  id:3,
+  weight:[[-1,-1,-1],
+  [-1,8,-1],
+  [-1,-1,-1]]
+}]
