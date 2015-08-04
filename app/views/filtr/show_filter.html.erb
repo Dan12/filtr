@@ -1,11 +1,15 @@
 <div class="show-filter-container section-container">
   <div class="section-header">
-    <h2 class="show-filter-header">Filter Name</h2>
+    <h2 class="show-filter-header">Filter Name <small><a href="/users/show">User Name</a></small></h2>
+    <%if true%>
+    <div class="add-to-library button-1">Add To Library</div>
+    <%end%>
   </div>
   <div class="section-content">
     <div class="manual-enter enter-tab">
       <h3>Manual</h3>
       <div class="filter-inputs"></div>
+      <div class="toggle-inputs button-1">Hide Inputs</div>
     </div>
     <div class="code-enter enter-tab">
       <h3>Code</h3>
@@ -14,7 +18,11 @@
       <h3>Preview</h3>
       <img class="filter-preview-refresh refresh" src="/assets/refresh.png" alt="refresh">
       <canvas id="preview-canvas" class="preview-canvas">Canvas is not supported by your browser</canvas>
+      <%if false%>
       <div class="button-1 save-filter">Save Filter</div>
+      <%else%>
+      <div class="button-1 copy-filter">Copy Filter</div>
+      <%end%>
     </div>
   </div>
 </div>

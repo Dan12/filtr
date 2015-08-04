@@ -1,42 +1,61 @@
 <div class="show-user-container section-container">
   <div class="section-header">
-    <h2 class="show-user-header">User Name</h2>
+    <h2 class="show-user-header">Filters</h2>
   </div>
   <div class="section-content">
-    <h2>My Filters</h2>
-    <div class="user-filters">
-      <% for i in 1..10 do %>
-      <div class="section-item">
-        <img class="section-item-image" src="/assets/temp.png" alt="name">
-        <a href="http://google.com" class="section-item-content">
-          <span class="section-item-name">
-            Laplacian Filter
-          </span>
-          <span class="section-item-views">
-            43 views
-          </span>
-        </a>
-      </div>
-      <%end%>
+    <% for i in 1..10 do %>
+    <div class="section-item">
+      <img class="section-item-image" src="/assets/temp.png" alt="name">
+      <a href="/filter/show/1" class="section-item-content">
+        <span class="section-item-name">
+          Laplacian Filter
+        </span>
+        <span class="section-item-views">
+          43 views
+        </span>
+      </a>
     </div>
+    <%end%>
+  </div>
+</div>
+<div class="show-user-container section-container">
+  <div class="section-header">
+    <h2 class="show-user-header">Mashups</h2>
   </div>
   <div class="section-content">
-    <h2>My Library</h2>
-    <div class="user-library">
-      <% for i in 1..10 do %>
-      <div class="section-item">
-        <img class="section-item-image" src="/assets/temp.png" alt="name">
-        <a href="http://google.com" class="section-item-content">
-          <span class="section-item-name">
-            Laplacian Filter
-          </span>
-          <span class="section-item-views">
-            43 views
-          </span>
-        </a>
-      </div>
-      <%end%>
+    <% for i in 1..10 do %>
+    <div class="section-item">
+      <img class="section-item-image" src="/assets/temp.png" alt="name">
+      <a href="/mashup/show/1" class="section-item-content">
+        <span class="section-item-name">
+          Laplacian Filter
+        </span>
+        <span class="section-item-views">
+          43 views
+        </span>
+      </a>
     </div>
+    <%end%>
+  </div>
+</div>
+<div class="show-user-container section-container">
+  <div class="section-header">
+    <h2 class="show-user-header">Library</h2>
+  </div>
+  <div class="section-content">
+    <% for i in 1..10 do %>
+    <div class="section-item">
+      <img class="section-item-image" src="/assets/temp.png" alt="name">
+      <a href="/filter/show/1" class="section-item-content">
+        <span class="section-item-name">
+          Laplacian Filter
+        </span>
+        <span class="section-item-views">
+          43 views
+        </span>
+      </a>
+    </div>
+    <%end%>
   </div>
 </div>
 <a href="/users/edit"><div class="button-1 to-edit-page">Edit Profile</div></a>

@@ -24,4 +24,8 @@ class FiltrController < ApplicationController
   def show_filter
     render "show_filter"
   end
+  
+  def show_mashup
+    render "show_mashup"
+  end
 end

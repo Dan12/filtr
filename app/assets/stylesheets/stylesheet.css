@@ -8,6 +8,14 @@ body{
   margin:20px 30px;
 }
 
+small{
+  font-size:0.6em;
+}
+
+small, small a{
+  color:rgb(90,90,90);
+}
+
 /* header */
 .header-container{
   background-color:rgb(237,237,237);
@@ -250,7 +258,7 @@ input:focus{
   width:40%;
 }
 
-.generate-code, .save-filter{
+.generate-code, .save-filter, .copy-filter{
   margin-left:0;
 }
 
@@ -270,6 +278,10 @@ input:focus{
   display:inline-block;
 }
 
+.toggle-inputs{
+  margin-left: 0;
+}
+
 /* mashup filters */
 .mashup-preview, .mashup-layers, .mashup-library{
   margin:0 20px;
@@ -285,6 +297,15 @@ input:focus{
 }
 
 .mashup-layers h3, .mashup-library h3{
+  margin-top:0;
+}
+
+.mashup-preview-refresh{
+  position:absolute;
+}
+
+.save-mashup, .copy-mashup{
+  margin-left:20px;
   margin-top:0;
 }
 
@@ -318,4 +339,11 @@ form, form input{
   width:20px;
   height:20px;
   cursor:pointer;
+}
+
+/*show filter*/
+.add-to-library{
+  margin: 12px 30px 12px 0;
+  position: relative;
+  top: -4px;
 }

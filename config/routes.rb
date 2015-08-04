@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   #filter
   get "/filter/show/:id" => "filtr#show_filter"
   
+  #mashup
+  get "/mashup/show/:id" => "filtr#show_mashup"
+  
   #user
   #create
   get "/signup" => "users#signup"

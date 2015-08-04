@@ -22,26 +22,47 @@ function showFilterPageSetup(){
   }
   
   $(".filter-input-col").blur(function(){
-    updateImage(dim);
+    updateImageShow(dim);
   });
   
   canvElem = document.getElementById("preview-canvas");
   canvas = canvElem.getContext("2d");
   image = new Image();
-  image.src = "/assets/img"+randNum(1,4)+".jpeg";
+  image.src = "/assets/img"+randNum(1,10)+".jpeg";
   image.onload = function(){
-    updateImage(dim);
+    updateImageShow(dim);
   }
   
   $(".filter-preview-refresh").click(function(){
-    image.src = "/assets/img"+randNum(1,4)+".jpeg";
+    image.src = "/assets/img"+randNum(1,10)+".jpeg";
     image.onload = function(){
-      updateImage(dim);
+      updateImageShow(dim);
     }
+  });
+  
+  $(".toggle-inputs").click(function(){
+    $(".filter-inputs").toggle(100,function(){$(window).resize();});
+    $('.toggle-inputs').text($('.toggle-inputs').text() == "Hide Inputs" ? "Show Inputs" : "Hide Inputs");
+  });
+  
+  $(".generate-code").click(function(){
+    var val = editor.getValue();
+    $.ajax({
+        type: "POST",
+        url: "/generate_code",
+        data: {code: val},
+        success: function(data, textStatus, jqXHR) {
+          //console.log(jqXHR);
+          generateInputsFromCodeShow(jqXHR.responseJSON.output);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error=" + errorThrown);
+        }
+    });
   });
 }
 
-function updateImage(dim){
+function updateImageShow(dim){
   canvas.drawImage(image,0,0,canvElem.width,canvElem.height);
   var temp = canvas.getImageData(0,0,canvElem.width,canvElem.height);
   var weight = [[0,0,0],
@@ -58,4 +79,25 @@ function updateImage(dim){
     weight = generateWeights(inArr);
   }
   drawImage(canvElem.width,canvElem.height,processImage(temp.data,canvElem.height,canvElem.width,weight,4),canvas);
+}
+
+function generateInputsFromCodeShow(output){
+  var outArr = output.split("\n");
+  var dim = parseInt(outArr[0]);
+  $(".filter-dim-input").val(dim);
+  if(dim%2 != 0){
+    $(".filter-input-row").remove();
+    for(var i = 1; i <= dim; i++){
+      $(".filter-inputs").append('<div class="filter-input-row"></div>');
+      for(var k = 1; k <= dim; k++){
+        var value = outArr[(i-1)*dim+k];
+        $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
+      } 
+    }
+    $(window).resize();
+    updateImageShow(dim);
+    $(".filter-input-col").blur(function(){
+      updateImageShow(dim);
+    });
+  }
 }

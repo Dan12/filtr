@@ -1,7 +1,7 @@
 function creationPageSetup(){
   var editor = CodeMirror(document.getElementsByClassName("code-enter")[0], {
     lineNumbers: true,
-    value: "//blur filter\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n\tfor(var j = 0; j < dim; j++){\n\t\t//output the value of the element at\n\t\t//the ith row of the jth column of the filter matrix\n\t\tconsole.log(1);\n\t}\n};",
+    value: "//blur filter\n//The filter dimension must be an odd number\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n\tfor(var j = 0; j < dim; j++){\n\t\t//output the value of the element at\n\t\t//the ith row of the jth column of the filter matrix\n\t\tconsole.log(1);\n\t}\n};",
     mode:  "javascript",
   });
   
@@ -14,7 +14,7 @@ function creationPageSetup(){
         url: "/generate_code",
         data: {code: val},
         success: function(data, textStatus, jqXHR) {
-          console.log(jqXHR);
+          //console.log(jqXHR);
           generateInputsFromCode(jqXHR.responseJSON.output);
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -36,7 +36,11 @@ function creationPageSetup(){
           $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
         } 
       }
-      creationReformat();
+      $(".toggle-inputs").click(function(){
+        $(".filter-inputs").toggle(100,function(){$(window).resize();});
+        $('.toggle-inputs').text($('.toggle-inputs').text() == "Hide Inputs" ? "Show Inputs" : "Hide Inputs");
+      });
+      $(window).resize();
       updateImage();
       $(".filter-input-col").blur(function(){
         updateImage();
@@ -47,23 +51,15 @@ function creationPageSetup(){
   canvElem = document.getElementById("preview-canvas");
   canvas = canvElem.getContext("2d");
   image = new Image();
-  image.src = "/assets/img"+randNum(1,4)+".jpeg";
+  image.src = "/assets/img"+randNum(1,10)+".jpeg";
   image.onload = function(){
     updateImage();
   }
   
   $(".filter-preview-refresh").click(function(){
-    image.src = "/assets/img"+randNum(1,4)+".jpeg";
+    image.src = "/assets/img"+randNum(1,10)+".jpeg";
     image.onload = function(){
       updateImage();
-    }
-  });
-  
-  creationReformat();
-  
-  $(window).resize(function(){
-    if($(".create-filter-container").html() !== undefined){
-      creationReformat();
     }
   });
 }
@@ -82,21 +78,10 @@ function updateImage(){
         inArr.push(parseFloat($(".filter-input-"+(i*dim+k)+"").val()));
       }
     }
-    console.log(inArr);
+    //console.log(inArr);
     weight = generateWeights(inArr);
   }
   drawImage(canvElem.width,canvElem.height,processImage(temp.data,canvElem.height,canvElem.width,weight,4),canvas);
-}
-
-function creationReformat(){
-  $(".CodeMirror").css("height",$(".CodeMirror").width()+"px");
-  $(".preview-container").css({"top":"0","left":"0"});
-  $(".preview-canvas").css({"height":$(".CodeMirror").width()+"px"});
-  $(".preview-container").css({"top":($(".code-enter").offset().top-$(".preview-container").offset().top)+"px","left":($(".code-enter").width()-$(".preview-container").width()+20)+"px"});
-  
-  $(".filter-preview-refresh").css({"margin-top":"0","top":"0"})
-  $(".filter-preview-refresh").css("margin-top",($(".code-enter h3").offset().top-$(".preview-container h3").offset().top)+"px");
-  $(".filter-preview-refresh").css("top",(16)+"px");
 }
 
 function generateInputsFromCode(output){
@@ -112,7 +97,7 @@ function generateInputsFromCode(output){
         $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
       } 
     }
-    creationReformat();
+    $(window).resize();
     updateImage();
     $(".filter-input-col").blur(function(){
       updateImage();
