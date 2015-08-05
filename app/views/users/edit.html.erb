@@ -3,10 +3,10 @@
     <h2 class="edit-profile-header">Edit Profile</h2>
   </div>
   <div class="section-content-edit-mod">
-    <form action="">
+    <form action="/users/update">
       <div class="form-input">
         <label>Username</label>
-        <input type="text" name="username">
+        <input type="text" name="username" value="<%=User.find_by(id: session[:user_id]).username%>">
       </div>
       <div class="form-input">
         <label>Password</label>

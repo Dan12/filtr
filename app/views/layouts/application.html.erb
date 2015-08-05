@@ -12,8 +12,8 @@
   <div class="header-container">
     <h1 class="header creation-center-header">Filtr</h1>
     <div class="authactions">
-      <%if false%>
-      <a href="/login">
+      <%if session[:user_id] == 1%>
+      <a href="/login_page">
         <span class="login">Login</span>
       </a>
       <a href="/signup">
@@ -25,15 +25,15 @@
     </div>
   </div>
   <div class="user-nav-container">
-    <a href="/mashup_creator"><div class="button-1">Create a Mashup</div></a>
     <a href="/creation_center"><div class="button-1">Create a Filter</div></a>
-    <a href="/users/show"><div class="button-1">Profile Page</div></a>
+    <a href="/mashup_creator"><div class="button-1">Create a Mashup</div></a>
+    <a href="/users/show/<%=session[:user_id]%>"><div class="button-1">Profile Page</div></a>
     <a href="/logout"><div class="button-1">Sign out</div></a>
   </div>
   <div class="nav-container">
     <div class="nav-left">
       <span class="status">
-        Signed in as <span class="username">Guest</span>
+        Signed in as <span class="username"><%=User.find_by(id: session[:user_id]).username%></span>
       </span>
     </div>
     <div class="nav-right">

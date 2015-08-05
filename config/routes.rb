@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get "/users/create" => "users#create"
   
   #read
-  get "/users/show" => "users#show"
+  get "/users/show/:id" => "users#show"
   
   #update
   get "/users/edit" => "users#edit"
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get "/users/destroy" => "users#destroy"
   
   #login
+  get "/login_page" => "users#login_page"
   get "/login" => "users#login"
   
   #logout

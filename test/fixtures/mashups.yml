@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  filters: MyString
+  name: MyString
+  views: 1
+  thumbnail: MyString
+  user_id: 1
+
+two:
+  filters: MyString
+  name: MyString
+  views: 1
+  thumbnail: MyString
+  user_id: 1

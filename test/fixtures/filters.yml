@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  matrix: MyString
+  name: MyString
+  views: 1
+  code: MyString
+  thumbnail: MyString
+  user_id: 1
+
+two:
+  matrix: MyString
+  name: MyString
+  views: 1
+  code: MyString
+  thumbnail: MyString
+  user_id: 1

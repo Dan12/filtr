@@ -1,6 +1,6 @@
 <div class="show-user-container section-container">
   <div class="section-header">
-    <h2 class="show-user-header">Filters</h2>
+    <h2 class="show-user-header"><%=@user.username%>'s Filters</h2>
   </div>
   <div class="section-content">
     <% for i in 1..10 do %>
@@ -20,7 +20,7 @@
 </div>
 <div class="show-user-container section-container">
   <div class="section-header">
-    <h2 class="show-user-header">Mashups</h2>
+    <h2 class="show-user-header"><%=@user.username%>'s Mashups</h2>
   </div>
   <div class="section-content">
     <% for i in 1..10 do %>
@@ -40,7 +40,7 @@
 </div>
 <div class="show-user-container section-container">
   <div class="section-header">
-    <h2 class="show-user-header">Library</h2>
+    <h2 class="show-user-header"><%=@user.username%>'s Library</h2>
   </div>
   <div class="section-content">
     <% for i in 1..10 do %>
@@ -58,4 +58,6 @@
     <%end%>
   </div>
 </div>
+<%if @user.id == session[:user_id]%>
 <a href="/users/edit"><div class="button-1 to-edit-page">Edit Profile</div></a>
+<%end%>
