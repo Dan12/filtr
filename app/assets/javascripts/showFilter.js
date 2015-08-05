@@ -1,6 +1,6 @@
 function showFilterPageSetup(){
-  var code = "//blur filter\nvar dim = 3;\n//your first output has to be the dimension of the filter\nconsole.log(dim);\nfor(var i = 0; i < dim; i++){\n\tfor(var j = 0; j < dim; j++){\n\t\t//output the value of the element at\n\t\t//the ith row of the jth column of the filter matrix\n\t\tconsole.log(1);\n\t}\n};"
-  var inputs = "0,0,0\n0,1,0\n0,0,0";
+  var code = $(".data").data("code");
+  var inputs = $(".data").data("matrix").split(",");
   
   var editor = CodeMirror(document.getElementsByClassName("code-enter")[0], {
     lineNumbers: true,
@@ -10,13 +10,11 @@ function showFilterPageSetup(){
   
   $(".code-enter").append('<div class="button-1 generate-code">Generate</div>');
   
-  var inputRows = inputs.split("\n");
-  var dim = inputRows.length;
+  var dim = inputs[0];
   for(var i = 0; i < dim; i++){
-    var inputCols = inputRows[i].split(",");
     $(".filter-inputs").append('<div class="filter-input-row"></div>');
     for(var j = 0; j < dim; j++){
-      var value = inputCols[j];
+      var value = inputs[i*dim+j+1];
       $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+(i*dim+j)+'" size="6" value="'+value+'" onClick="this.select();">');
     }
   }
@@ -53,12 +51,62 @@ function showFilterPageSetup(){
         data: {code: val},
         success: function(data, textStatus, jqXHR) {
           //console.log(jqXHR);
-          generateInputsFromCodeShow(jqXHR.responseJSON.output);
+          dim = generateInputsFromCodeShow(jqXHR.responseJSON.output);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert("Error=" + errorThrown);
         }
     });
+  });
+  
+  $(".save-filter").click(function(){
+    var name = prompt("Name your filter",$(".data").data("name"));
+    var dataURL = canvElem.toDataURL();
+    var tempImage = new Image();
+    tempImage.src = dataURL;
+    tempImage.onload = function(){
+      document.getElementById("thumb-canvas").getContext("2d").drawImage(tempImage,0,0,50,50);
+      $.ajax({
+        type: "POST",
+        url: "/filter/update/"+($(".data").data("id"))+"",
+        data: {name: name, matrix: getShowMatrix(dim), code: editor.getValue(), thumb:document.getElementById("thumb-canvas").toDataURL()},
+        success: function(data, textStatus, jqXHR) {
+          // console.log(data);
+          // console.log(textStatus);
+          // console.log(jqXHR);
+          //window.location.href = data.url;
+          $(".filter-name").text(name);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error=" + errorThrown);
+        }
+      });
+    }
+  });
+  
+  $(".copy-filter").click(function(){
+    var name = prompt("Name your filter",$(".data").data("name"));
+    var dataURL = canvElem.toDataURL();
+    var tempImage = new Image();
+    tempImage.src = dataURL;
+    tempImage.onload = function(){
+      document.getElementById("thumb-canvas").getContext("2d").drawImage(tempImage,0,0,50,50);
+      $.ajax({
+        type: "POST",
+        url: "/create_filter",
+        data: {name: name, matrix: getShowMatrix(dim), code: editor.getValue(), thumb:document.getElementById("thumb-canvas").toDataURL()},
+        success: function(data, textStatus, jqXHR) {
+          // console.log(data);
+          // console.log(textStatus);
+          // console.log(jqXHR);
+          //window.location.href = data.url;
+          $(".filter-name").text(name);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error=" + errorThrown);
+        }
+      });
+    }
   });
 }
 
@@ -75,7 +123,7 @@ function updateImageShow(dim){
         inArr.push(parseFloat($(".filter-input-"+(i*dim+k)+"").val()));
       }
     }
-    console.log(inArr);
+    //console.log(inArr);
     weight = generateWeights(inArr);
   }
   drawImage(canvElem.width,canvElem.height,processImage(temp.data,canvElem.height,canvElem.width,weight,4),canvas);
@@ -100,4 +148,15 @@ function generateInputsFromCodeShow(output){
       updateImageShow(dim);
     });
   }
+  return dim;
+}
+
+function getShowMatrix(dim){
+  var retString = ""+dim+",";
+  for(var i = 0; i < dim; i++){
+    for(var k = 0; k < dim; k++){
+      retString+=$(".filter-input-"+(i*dim+k)+"").val()+",";
+    }
+  }
+  return retString.substring(0,retString.length-1);
 }

@@ -21,9 +21,15 @@ function generalReformat(){
     var items = $(".section-item").length;
     var rightMost = $(".section-item:first-child").offset().left;
     for(var i = 2; i <= items; i++){
-      var temp = $(".section-item:nth-child("+i+")").offset().left;
-      if(temp > rightMost)
-        rightMost = temp;
+      if($(".section-item:nth-child("+i+")").offset() !== undefined){
+        var temp = $(".section-item:nth-child("+i+")").offset().left;
+        if(temp > rightMost)
+          rightMost = temp;
+        else{
+          rightMost+=$(".section-item-image").width()+parseInt($(".section-item").css("margin-left"));
+          break;
+        }
+      }
       else{
         rightMost+=$(".section-item-image").width()+parseInt($(".section-item").css("margin-left"));
         break;
@@ -53,6 +59,7 @@ function generalReformat(){
     $(".CodeMirror").css("height",$(".CodeMirror").width()+"px");
     $(".preview-container").css({"top":"0","left":"0"});
     $(".preview-canvas").css({"height":$(".CodeMirror").width()+"px"});
+    //$(".preview-canvas").attr({"height":$(".CodeMirror").width()+"px","width":$(".CodeMirror").width()+"px"});
     $(".preview-container").css({"top":($(".code-enter").offset().top-$(".preview-container").offset().top)+"px","left":($(".code-enter").width()-$(".preview-container").width()+20)+"px"});
     
     $(".filter-preview-refresh").css({"margin-top":"0","top":"0"})

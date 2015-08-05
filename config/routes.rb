@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   
   #filter
   get "/filter/show/:id" => "filtr#show_filter"
+  post "/create_filter" => "filtr#create_filter"
+  post "/filter/update/:id" => "filtr#update_filter"
+  get "/filter/add_to_library/:id" => "filtr#add_to_library"
   
   #mashup
   get "/mashup/show/:id" => "filtr#show_mashup"

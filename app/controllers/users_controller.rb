@@ -27,19 +27,14 @@ class UsersController < ApplicationController
   end
   
   def create
-    @exists = User.where(username: params[:username])
-    if @exists.length == 0 && password != ""
-      @user = User.new
-      @user.username = params[:username]
-      @user.password = params[:password]
-      @user.password_confirmation = params[:password_confirmation]
-      
-      if @user.save
-        session[:user_id] = @user.id
-        redirect_to "/users/show/#{@user.id}"
-      else
-        redirect_to "/signup"
-      end
+    @user = User.new
+    @user.username = params[:username]
+    @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
+    
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to "/users/show/#{@user.id}"
     else
       redirect_to "/signup"
     end
@@ -47,6 +42,8 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by(id: params[:id])
+    @library = @user.filters
+    @filters = Filter.where(user_id: @user.id)
     render "show"
   end
   
@@ -62,10 +59,8 @@ class UsersController < ApplicationController
     end
     if @exists == 0
       @user.username = params[:username]
-      if(params[:password] != "")
-        @user.password = params[:password]
-        @user.password_confirmation = params[:password_confirmation]
-      end
+      @user.password = params[:password]
+      @user.password_confirmation = params[:password_confirmation]
       
       if @user.save
         session[:user_id] = @user.id

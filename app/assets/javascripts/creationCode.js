@@ -36,14 +36,39 @@ function creationPageSetup(){
           $(".filter-inputs div:last").append('<input class="filter-input-col filter-input-'+((i-1)*dim+(k-1))+'" size="6" value="'+value+'" onClick="this.select();">');
         } 
       }
-      $(".toggle-inputs").click(function(){
-        $(".filter-inputs").toggle(100,function(){$(window).resize();});
-        $('.toggle-inputs').text($('.toggle-inputs').text() == "Hide Inputs" ? "Show Inputs" : "Hide Inputs");
-      });
       $(window).resize();
       updateImage();
       $(".filter-input-col").blur(function(){
         updateImage();
+      });
+    }
+  });
+  
+  $(".toggle-inputs").click(function(){
+    $(".filter-inputs").toggle(100,function(){$(window).resize();});
+    $('.toggle-inputs').text($('.toggle-inputs').text() == "Hide Inputs" ? "Show Inputs" : "Hide Inputs");
+  });
+  
+  $(".save-filter").click(function(){
+    var name = prompt("Name your filter");
+    var dataURL = canvElem.toDataURL();
+    var tempImage = new Image();
+    tempImage.src = dataURL;
+    tempImage.onload = function(){
+      document.getElementById("thumb-canvas").getContext("2d").drawImage(tempImage,0,0,50,50);
+      $.ajax({
+        type: "POST",
+        url: "/create_filter",
+        data: {name: name, matrix: getCreateMatrix(), code: editor.getValue(), thumb:document.getElementById("thumb-canvas").toDataURL()},
+        success: function(data, textStatus, jqXHR) {
+          // console.log(data);
+          // console.log(textStatus);
+          // console.log(jqXHR);
+          window.location.href = data.url;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error=" + errorThrown);
+        }
       });
     }
   });
@@ -62,6 +87,17 @@ function creationPageSetup(){
       updateImage();
     }
   });
+}
+
+function getCreateMatrix(){
+  var dim = parseInt($(".filter-dim-input").val());
+  var retString = ""+dim+",";
+  for(var i = 0; i < dim; i++){
+    for(var k = 0; k < dim; k++){
+      retString+=$(".filter-input-"+(i*dim+k)+"").val()+",";
+    }
+  }
+  return retString.substring(0,retString.length-1);
 }
 
 function updateImage(){

@@ -4,15 +4,15 @@
     <img class="popular-refresh refresh" src="/assets/refresh.png" alt="refresh">
   </div>
   <div class="section-content">
-    <% for i in 1..10 do %>
+    <% @popular.each do |f|%>
     <div class="section-item">
-      <img class="section-item-image" src="/assets/temp.png" alt="name">
-      <a href="/filter/show/1" class="section-item-content">
+      <img class="section-item-image" src="<%=f.thumbnail%>" alt="name">
+      <a href="/filter/show/<%=f.id%>" class="section-item-content">
         <span class="section-item-name">
-          Laplacian Filter
+          <%=f.name%>
         </span>
         <span class="section-item-views">
-          43 views
+          <%=f.views%> views
         </span>
       </a>
     </div>
@@ -25,15 +25,15 @@
     <img class="random-refresh refresh" src="/assets/refresh.png" alt="refresh">
   </div>
   <div class="section-content">
-    <% for i in 1..10 do %>
+    <% @random.each do |f|%>
     <div class="section-item">
-      <img class="section-item-image" src="/assets/temp.png" alt="name">
-      <a href="/filter/show/1" class="section-item-content">
+      <img class="section-item-image" src="<%=f.thumbnail%>" alt="name">
+      <a href="/filter/show/<%=f.id%>" class="section-item-content">
         <span class="section-item-name">
-          Name
+          <%=f.name%>
         </span>
         <span class="section-item-views">
-          1 views
+          <%=f.views%> views
         </span>
       </a>
     </div>

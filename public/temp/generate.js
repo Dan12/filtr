@@ -1,5 +1,6 @@
 //blur filter
-var dim = 5;
+//The filter dimension must be an odd number
+var dim = 7;
 //your first output has to be the dimension of the filter
 console.log(dim);
 for(var i = 0; i < dim; i++){

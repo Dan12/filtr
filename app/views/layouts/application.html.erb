@@ -24,12 +24,14 @@
       <%end%>
     </div>
   </div>
+  <%if session[:user_id] != 1%>
   <div class="user-nav-container">
     <a href="/creation_center"><div class="button-1">Create a Filter</div></a>
     <a href="/mashup_creator"><div class="button-1">Create a Mashup</div></a>
     <a href="/users/show/<%=session[:user_id]%>"><div class="button-1">Profile Page</div></a>
     <a href="/logout"><div class="button-1">Sign out</div></a>
   </div>
+  <%end%>
   <div class="nav-container">
     <div class="nav-left">
       <span class="status">

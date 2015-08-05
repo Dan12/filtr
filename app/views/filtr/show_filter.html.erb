@@ -1,8 +1,8 @@
 <div class="show-filter-container section-container">
   <div class="section-header">
-    <h2 class="show-filter-header">Filter Name <small><a href="/users/show">User Name</a></small></h2>
-    <%if true%>
-    <div class="add-to-library button-1">Add To Library</div>
+    <h2 class="show-filter-header"><span class="filter-name"><%=@filter.name%></span> <small><a href="/users/show/<%=@filter.user_id%>"><%=User.find_by(id: @filter.user_id).username%></a></small></h2>
+    <%if !@inLibrary%>
+    <a href="/filter/add_to_library/<%=@filter.id%>"><div class="add-to-library button-1">Add To Library</div></a>
     <%end%>
   </div>
   <div class="section-content">
@@ -17,8 +17,8 @@
     <div class="preview-container">
       <h3>Preview</h3>
       <img class="filter-preview-refresh refresh" src="/assets/refresh.png" alt="refresh">
-      <canvas id="preview-canvas" class="preview-canvas">Canvas is not supported by your browser</canvas>
-      <%if false%>
+      <canvas id="preview-canvas" class="preview-canvas" width="200" height="200">Canvas is not supported by your browser</canvas>
+      <%if @filterOwner%>
       <div class="button-1 save-filter">Save Filter</div>
       <%else%>
       <div class="button-1 copy-filter">Copy Filter</div>
@@ -26,3 +26,5 @@
     </div>
   </div>
 </div>
+<canvas id="thumb-canvas" width="50" height="50" style="display:none">Canvas is not supported by your browser</canvas>
+<%= content_tag(:div, "", class: 'data', data:{matrix:@filter.matrix,code:@filter.code,name:@filter.name,id:@filter.id}) %>

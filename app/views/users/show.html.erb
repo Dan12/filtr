@@ -3,15 +3,15 @@
     <h2 class="show-user-header"><%=@user.username%>'s Filters</h2>
   </div>
   <div class="section-content">
-    <% for i in 1..10 do %>
+    <% @filters.each do |f|%>
     <div class="section-item">
-      <img class="section-item-image" src="/assets/temp.png" alt="name">
-      <a href="/filter/show/1" class="section-item-content">
+      <img class="section-item-image" src="<%=f.thumbnail%>" alt="name">
+      <a href="/filter/show/<%=f.id%>" class="section-item-content">
         <span class="section-item-name">
-          Laplacian Filter
+          <%=f.name%>
         </span>
         <span class="section-item-views">
-          43 views
+          <%=f.views%> views
         </span>
       </a>
     </div>
@@ -43,15 +43,15 @@
     <h2 class="show-user-header"><%=@user.username%>'s Library</h2>
   </div>
   <div class="section-content">
-    <% for i in 1..10 do %>
+    <% @library.each do |f|%>
     <div class="section-item">
-      <img class="section-item-image" src="/assets/temp.png" alt="name">
-      <a href="/filter/show/1" class="section-item-content">
+      <img class="section-item-image" src="<%=f.thumbnail%>" alt="name">
+      <a href="/filter/show/<%=f.id%>" class="section-item-content">
         <span class="section-item-name">
-          Laplacian Filter
+          <%=f.name%>
         </span>
         <span class="section-item-views">
-          43 views
+          <%=f.views%> views
         </span>
       </a>
     </div>
