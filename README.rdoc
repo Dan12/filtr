@@ -1,15 +1,25 @@
 == Filtr
 
-This application will serve and store image filters
+This application serves and stores image filters.
 
-Goals:
+User Stories:
 
-* Stackable filters
-* Filter sharing
+* A Math person wants to see live representation of an kernal, comes to website, generates matrix, and get a preview of the filter
+* A student wants to learn about image kernals, comes to website and explores different kernals and learns stuff
+* A person wants to see cool image filters, comes to website and browses different filters
+
+Features:
+
+* Stackable filters (Mashup Filters)
 * User specific filters
 * Guest filters for quick first time user creations
-* User logins
+* User secure logins
+* Restrictive access
+* Filters entered in boxes or filter functions (write in javascript, send text to server and write to javascript file, reload javascript and create filter)
+
+Future Addons:
+
+* Filter sharing
 * Eventually use somthing like imagur to store images
 * Maybe have canvas to allow user to draw own image
-* Filters entered in boxes or filter functions (write in javascript, send text to server and write to javascript file, reload javascript and create filter)
 * Filter time feedback
