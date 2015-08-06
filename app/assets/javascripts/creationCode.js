@@ -76,13 +76,13 @@ function creationPageSetup(){
   canvElem = document.getElementById("preview-canvas");
   canvas = canvElem.getContext("2d");
   image = new Image();
-  image.src = "/assets/img"+randNum(1,10)+".jpeg";
+  image.src = $(".data").data("images")[randNum(1,10)-1];
   image.onload = function(){
     updateImage();
   }
   
   $(".filter-preview-refresh").click(function(){
-    image.src = "/assets/img"+randNum(1,10)+".jpeg";
+    image.src = $(".data").data("images")[randNum(1,10)-1];
     image.onload = function(){
       updateImage();
     }
