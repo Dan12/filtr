@@ -123,7 +123,7 @@ function updateImageShow(dim){
         inArr.push(parseFloat($(".filter-input-"+(i*dim+k)+"").val()));
       }
     }
-    //console.log(inArr);
+    console.log(inArr);
     weight = generateWeights(inArr);
   }
   drawImage(canvElem.width,canvElem.height,processImage(temp.data,canvElem.height,canvElem.width,weight,4),canvas);
