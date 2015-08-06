@@ -66,7 +66,7 @@ function generateWeights(inArr){
   for(var i = 0; i < dim; i++){
     ret[i] = [];
     for(var k = 0; k < dim; k++){
-      ret[i][k] = inArr[i*dim+k+1];
+      ret[i][k] = parseInt(inArr[i*dim+k+1]);
       sum+=ret[i][k];
     }
   }

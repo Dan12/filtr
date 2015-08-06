@@ -44,6 +44,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @library = @user.filters
     @filters = Filter.where(user_id: @user.id)
+    @mashups = Mashup.where(user_id: @user.id)
     render "show"
   end
   

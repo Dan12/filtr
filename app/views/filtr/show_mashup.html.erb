@@ -1,6 +1,6 @@
 <div class="mashup-filter-container section-container">
   <div class="section-header">
-    <h2 class="mashup-filter-header">Mashup Name <small><a href="/users/show">User Name</a></small></h2>
+    <h2 class="mashup-filter-header"><span class="mashup-name"><%=@mashup.name%></span> <small><a href="/users/show"><a href="/users/show/<%=@mashup.user_id%>"><%=User.find_by(id: @mashup.user_id).username%></a></a></small></h2>
   </div>
   <div class="section-content">
     <div class="mashup-preview">
@@ -16,9 +16,11 @@
       <h3>Library</h3>
     </div>
   </div>
-  <%if false%>
-  <div class="button-1 save-mashup">Save Mashup</div>
+  <%if @mashupOwner%>
+  <div class="button-1 update-mashup">Save Mashup</div>
   <%else%>
-  <div class="button-1 copy-mashup">Copy Mashup</div>
+  <div class="button-1 save-mashup">Copy Mashup</div>
   <%end%>
 </div>
+<canvas id="thumb-canvas" width="50" height="50" style="display:none">Canvas is not supported by your browser</canvas>
+<%= content_tag(:div, "", class: 'data', data:{library:@library,mashup:@mashup,filters:Filter.all}) %>

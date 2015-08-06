@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   
   #mashup
   get "/mashup/show/:id" => "filtr#show_mashup"
+  post "/create_mashup" => "filtr#create_mashup"
+  post "/mashup/update/:id" => "filtr#update_mashup"
   
   #user
   #create

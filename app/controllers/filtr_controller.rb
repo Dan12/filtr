@@ -34,7 +34,7 @@ class FiltrController < ApplicationController
     @filter.matrix = params[:matrix]
     @filter.thumbnail = params[:thumb]
     @filter.code = params[:code]
-    @filter.views = 0;
+    @filter.views = 0
     @filter.user_id = session[:user_id]
     @filter.save
     
@@ -52,10 +52,6 @@ class FiltrController < ApplicationController
     @library.filter_id = params[:id]
     @library.save
     redirect_to "/filter/show/#{params[:id]}"
-  end
-  
-  def mashup_creator
-    render "create_mashup"
   end
   
   def show_filter
@@ -82,7 +78,42 @@ class FiltrController < ApplicationController
     redirect_to "/filter/show/#{@filter.id}"
   end
   
+  def mashup_creator
+    @library = User.find_by(id: session[:user_id]).filters
+    render "create_mashup"
+  end
+  
+  def create_mashup
+    @mashup = Mashup.new
+    @mashup.name = params[:name]
+    @mashup.filters = params[:filters]
+    @mashup.thumbnail = params[:thumb]
+    @mashup.views = 0
+    @mashup.user_id = session[:user_id]
+    @mashup.save
+    
+    render :json => {"url" => "/mashup/show/#{@mashup.id}"}
+  end
+  
   def show_mashup
+    @mashup = Mashup.find_by(id: params[:id])
+    @mashupOwner = (@mashup.user_id == session[:user_id])
+    if !@mashupOwner
+      @mashup.views+=1
+      @mashup.save
+    end
+    @library = User.find_by(id: session[:user_id]).filters
     render "show_mashup"
+  end
+  
+  def update_mashup
+    @mashup = Mashup.find_by(id: params[:id])
+    if @mashup.user_id == session[:user_id]
+      @mashup.name = params[:name]
+      @mashup.filters = params[:filters]
+      @mashup.thumbnail = params[:thumb]
+      @mashup.save
+    end
+    redirect_to "/mashup/show/#{@mashup.id}"
   end
 end

@@ -40,12 +40,16 @@ function mashupCanvasReformat(){
 }
 
 function setupMashup(){
+  userLibrary = $(".data").data("library");
+  console.log(userLibrary);
+  
   previewCanvas = document.getElementById("mashup-preview-canvas");
   previewContext = previewCanvas.getContext("2d");
   previewImage = new Image();
   previewImage.src = "/assets/img"+randNum(1,10)+".jpeg";
   previewImage.onload = function(){
     previewContext.drawImage(previewImage,0,0,width,width);
+    drawImageLayers();
   }
   
   $(".mashup-preview-refresh").click(function(){
@@ -70,19 +74,20 @@ function setupMashup(){
   
   layerarray = [];
   for(var i = 0; i < 1; i++){
-    var tempImg = new Image();
-    tempImg.src = "";
-    layerarray.push({id:-1,name:"",thumb:tempImg,x:0,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
+    layerarray.push({id:-1,name:"",libIndex:-1,x:0,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
   }
   libraryarray = [];
-  for(var i = 0; i < 10; i++){
+  for(var i = 0; i < userLibrary.length; i++){
     var tempImg = new Image();
-    tempImg.src="/assets/temp.png";
+    tempImg.src=userLibrary[i].thumbnail;
     tempImg.onload = function(){
       checkImagesLoaded();
     }
-    libraryarray.push({id:i,name:""+Math.floor(Math.random()*100000000),thumb:tempImg,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
+    libraryarray.push({id:userLibrary[i].id,name:userLibrary[i].name,libIndex:i,x:width+padding+1,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
   }
+  
+  if($(".data").data("mashup") !== undefined)
+    setupShowMashupPage();
   
   context.fillStyle="gray";
   context.strokeStyle="black";
@@ -120,9 +125,134 @@ function setupMashup(){
     return false; 
   }, false);
   
+  $(".save-mashup").click(function(){
+    var name = "";
+    if(mashupShowName !== undefined)
+      name = prompt("Name your mashup",mashupShowName+"-copy");
+    else
+      name = prompt("Name your mashup");
+    var dataURL = previewCanvas.toDataURL();
+    var tempImage = new Image();
+    tempImage.src = dataURL;
+    tempImage.onload = function(){
+      document.getElementById("thumb-canvas").getContext("2d").drawImage(tempImage,0,0,50,50);
+      $.ajax({
+        type: "POST",
+        url: "/create_mashup",
+        data: {name: name, filters: getFilterListCreate(), thumb:document.getElementById("thumb-canvas").toDataURL()},
+        success: function(data, textStatus, jqXHR) {
+          // console.log(data);
+          // console.log(textStatus);
+          // console.log(jqXHR);
+          window.location.href = data.url;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error=" + errorThrown);
+        }
+      });
+    }
+  });
+  
   setupClicks();
   
   drawObjects();
+}
+
+function setupShowMashupPage(){
+  //console.log($(".data").data("mashup"));
+  //console.log($(".data").data("filters"));
+  var mashupFilters = $(".data").data("mashup").filters.split(",");
+  var temp = removeDuplicates(mashupFilters,libraryarray);
+  for(var i = 0; i < temp.length; i++){
+    var obj = searchForObjectById($(".data").data("filters"),parseInt(temp[i]));
+    var tempImg = new Image();
+    tempImg.src=obj.thumbnail;
+    tempImg.onload = function(){
+      checkImagesLoaded();
+    }
+    libraryarray.push({id:obj.id,name:obj.name,libIndex:userLibrary.length,x:width+padding+1,y:boxHeight*libraryarray.length+1,width:boxHeight-2,height:boxHeight-2});
+    userLibrary.push({id:obj.id,thumbnail:obj.thumbnail,matrix:obj.matrix})
+  }
+  for(var i = 0; i < mashupFilters.length; i++){
+    var obj = searchForObjectById($(".data").data("filters"),parseInt(mashupFilters[i]));
+    layerarray.splice(i,0,{id:obj.id,name:obj.name,libIndex:findLibId(obj.id,userLibrary),x:0,y:boxHeight*i+1,width:boxHeight-2,height:boxHeight-2});
+  }
+  layerarray[layerarray.length-1].y+=boxHeight*mashupFilters.length;
+  
+  mashupShowName = $(".data").data("mashup").name;
+  
+  $(".update-mashup").click(function(){
+    var name = prompt("Name your mashup",mashupShowName);
+    var dataURL = previewCanvas.toDataURL();
+    var tempImage = new Image();
+    tempImage.src = dataURL;
+    tempImage.onload = function(){
+      document.getElementById("thumb-canvas").getContext("2d").drawImage(tempImage,0,0,50,50);
+      $.ajax({
+        type: "POST",
+        url: "/mashup/update/"+$(".data").data("mashup").id+"",
+        data: {name:name,filters: getFilterListCreate(), thumb:document.getElementById("thumb-canvas").toDataURL()},
+        success: function(data, textStatus, jqXHR) {
+          // console.log(data);
+          // console.log(textStatus);
+          // console.log(jqXHR);
+          //window.location.href = data.url;
+          $(".mashup-name").text(name);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert("Error=" + errorThrown);
+        }
+      });
+    }
+  });
+}
+
+function removeDuplicates(inarr,libarr){
+  var ret = [];
+  $.each(inarr, function(i, el){
+      if($.inArray(el, ret) === -1) ret.push(el);
+  });
+  for(var i = 0; i < ret.length; i++){
+    for(var j = 0; j < libarr.length; j++){
+      if(ret[i] == libarr[j].id){
+        ret.splice(i,1);
+        i--;
+      }
+    }
+  }
+  return ret;
+}
+
+function findLibId(id,lib){
+  var ret = -1;
+  for(var i = 0; i <lib.length; i++){
+    if(lib[i].id == id){
+      ret = i;
+      break;
+    }
+  }
+  return ret;
+}
+
+function searchForObjectById(arr,val){
+  var ret = -1;
+  for(var i = 0; i < arr.length; i++){
+    if(arr[i].id == val){
+      ret = i;
+      break;
+    }
+  }
+  return arr[ret];
+}
+
+function getFilterListCreate(){
+  var ret = "";
+  console.log(layerarray);
+  for(var i = 0; i < layerarray.length-1; i++){
+    ret+=layerarray[i].id+",";
+  }
+  console.log(ret);
+  return ret.substring(0,ret.length-1);
 }
 
 function checkImagesLoaded(){
@@ -135,7 +265,9 @@ function drawObjects(){
   context.clearRect(0,0,layersCanvas.width+1,layersCanvas.width+1);
   for(var i=0; i<libraryarray.length; i++){
     context.strokeRect(libraryarray[i].x-1,libraryarray[i].y-1+libraryScrollY,width,libraryarray[i].height+2);
-    context.drawImage(libraryarray[i].thumb,libraryarray[i].x+width-libraryarray[i].width,libraryarray[i].y+libraryScrollY,libraryarray[i].width,libraryarray[i].height);
+    var tempImage = new Image();
+    tempImage.src = userLibrary[libraryarray[i].libIndex].thumbnail;
+    context.drawImage(tempImage,libraryarray[i].x+width-libraryarray[i].width,libraryarray[i].y+libraryScrollY,libraryarray[i].width,libraryarray[i].height);
     drawFitText(context,libraryarray[i].name,libraryarray[i].x,libraryarray[i].y+libraryScrollY,width-libraryarray[i].width,libraryarray[i].height)
   }
   for(var i=0; i<layerarray.length; i++){
@@ -144,13 +276,17 @@ function drawObjects(){
     else
       context.strokeRect(layerarray[i].x-1,layerarray[i].y-1+layersScrollY,width,layerarray[i].height+2);
     if(layerarray[i].id != -1){
-      context.drawImage(layerarray[i].thumb,layerarray[i].x+width-layerarray[i].width,layerarray[i].y+layersScrollY,layerarray[i].width,layerarray[i].height);
+      var tempImage = new Image();
+      tempImage.src = userLibrary[layerarray[i].libIndex].thumbnail;
+      context.drawImage(tempImage,layerarray[i].x+width-layerarray[i].width,layerarray[i].y+layersScrollY,layerarray[i].width,layerarray[i].height);
       drawFitText(context,layerarray[i].name,layerarray[i].x,layerarray[i].y+layersScrollY,width-layerarray[i].width,layerarray[i].height)
     }
   }
   if(dragItem != null){
+    var tempImage = new Image();
+    tempImage.src = userLibrary[dragItem.libIndex].thumbnail;
     context.strokeRect(dragItem.x-1,dragItem.y-1,width,dragItem.height+2);
-    context.drawImage(dragItem.thumb,dragItem.x+width-dragItem.w,dragItem.y,dragItem.width,dragItem.height);
+    context.drawImage(tempImage,dragItem.x+width-dragItem.w,dragItem.y,dragItem.width,dragItem.height);
     drawFitText(context,dragItem.name,dragItem.x,dragItem.y,width-dragItem.width,dragItem.height)
   }
 }
@@ -162,7 +298,8 @@ function drawImageLayers(){
   for(var i = 0; i < layerarray.length; i++){
     if(layerarray[i].id != -1){
       var temp = previewContext.getImageData(0,0,width,width);
-      var weight = weights[layerarray[i].id].weight
+      var weight = generateWeights(userLibrary[layerarray[i].libIndex].matrix.split(","));
+      console.log(weight);
       drawImage(temp.width,temp.height,processImage(temp.data,temp.height,temp.width,weight,4),previewContext);
     }
   }
@@ -201,7 +338,7 @@ function setupClicks(){
     //console.log(mouseX+","+mouseY+","+$("#mashup-layers-canvas").offset().top)
     for(var i = 0; i < libraryarray.length; i++){
       if(mouseX >= libraryarray[i].x && mouseX <= libraryarray[i].x+width && mouseY >= libraryarray[i].y+libraryScrollY && mouseY <= libraryarray[i].y+libraryarray[i].height+libraryScrollY){
-        dragItem = {id:libraryarray[i].id,name:libraryarray[i].name,thumb:libraryarray[i].thumb,x:libraryarray[i].x,y:libraryarray[i].y+libraryScrollY,width:libraryarray[i].width,height:libraryarray[i].height};
+        dragItem = {id:libraryarray[i].id,name:libraryarray[i].name,libIndex:libraryarray[i].libIndex,x:libraryarray[i].x,y:libraryarray[i].y+libraryScrollY,width:libraryarray[i].width,height:libraryarray[i].height};
         prevX = mouseX;
         prevY = mouseY;
         broken = true;
@@ -274,20 +411,3 @@ function setupClicks(){
       }
   });
 }
-
-weights = [{
-  id:1,
-  weight:[[ 0,-1, 0],
-  [-1, 5,-1],
-  [ 0,-1, 0]]
-},{
-  id:2,
-  weight:[[1/9,1/9,1/9,1/9],
-  [1/9,1/9,1/9,1/9],
-  [1/9,1/9,1/9,1/9]]
-},{
-  id:3,
-  weight:[[-1,-1,-1],
-  [-1,8,-1],
-  [-1,-1,-1]]
-}]

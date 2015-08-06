@@ -85,7 +85,7 @@ function showFilterPageSetup(){
   });
   
   $(".copy-filter").click(function(){
-    var name = prompt("Name your filter",$(".data").data("name"));
+    var name = prompt("Name your filter",$(".data").data("name")+"-copy");
     var dataURL = canvElem.toDataURL();
     var tempImage = new Image();
     tempImage.src = dataURL;
@@ -99,7 +99,7 @@ function showFilterPageSetup(){
           // console.log(data);
           // console.log(textStatus);
           // console.log(jqXHR);
-          //window.location.href = data.url;
+          window.location.href = data.url;
           $(".filter-name").text(name);
         },
         error: function(jqXHR, textStatus, errorThrown) {
